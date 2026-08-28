@@ -7,17 +7,17 @@ class Spinningcube < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.0/spinningcube-macos-arm64.tar.gz"
-      sha256 "9dffe6f8f4523739a05f1e3750c3968526d1f2aab255efffe5503a1ddff08e91"
+      sha256 "9a5c21c19e426603ee674247880add23c73d70736324d7f9569a0b73bd6fbd97"
     else
       url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.0/spinningcube-macos-x86_64.tar.gz"
-      sha256 "c342cd6b31744865ded9402e011670c7ac1fd3067a1e3ff15d19f193634ad73d"
+      sha256 "1cd435588f093f888c013a0c781dd49f1f6df0b252e8ee44db05e905fde1260c"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.0/spinningcube-linux-x86_64.tar.gz"
-      sha256 "5137f462ab2526a7649d2f1f5d7a3cd2037c01217823b1deefc4f8cbf0799276"
+      sha256 "93bd13568b9f39d15de9d809efe420d10318980f71efdb08651865cf3626e5c4"
     end
   end
 
