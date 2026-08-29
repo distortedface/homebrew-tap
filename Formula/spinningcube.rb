@@ -1,23 +1,23 @@
 class Spinningcube < Formula
   desc "Repository-bound local verification authority for SpinningCube.run"
   homepage "https://spinningcube.run"
-  version "0.1.2"
+  version "0.1.3"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.2/spinningcube-macos-arm64.tar.gz"
-      sha256 "55f3cbc0db8f387729b594571e4b2f3a87a6f8020958bfd8ae8e137072a0e2bc"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.3/spinningcube-macos-arm64.tar.gz"
+      sha256 "733594a03475e7bde483658feca6f88439eedb27527570e9bce723b0225da53e"
     else
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.2/spinningcube-macos-x86_64.tar.gz"
-      sha256 "903864bd7b701f7d56bdcca22061f032a63694429b3a99302b1d6bd7a9162dcb"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.3/spinningcube-macos-x86_64.tar.gz"
+      sha256 "97e8ab515c34a5c430db976a7ecfcd79527583c6584f26e3b0bbab9cc426acc5"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.2/spinningcube-linux-x86_64.tar.gz"
-      sha256 "fd7f8da7d98b7a1e10909a6982c8a5653054f7e2fec242017a70d3342ec41f07"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.3/spinningcube-linux-x86_64.tar.gz"
+      sha256 "afbc6ffced9a532a0fe0709836f07fd1ff91d3484c9d41e604691ab70eee73a4"
     end
   end
 
