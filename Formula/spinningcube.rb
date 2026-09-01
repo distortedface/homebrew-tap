@@ -9,16 +9,6 @@ class Spinningcube < Formula
 
   depends_on "cosign" => :build
 
-  resource "release-manifest" do
-    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.23/release-manifest.json"
-    sha256 "14b88ef8844da33dfc046da67ca40d227b0b6266229c30c6b69160dfa02fa787"
-  end
-
-  resource "release-manifest-bundle" do
-    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.23/release-manifest.sigstore.json"
-    sha256 "cedf90040894dce99a457ab23c1d559cdddc8b45f0f47a3edad4400f4060a640"
-  end
-
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.23/spinningcube-macos-arm64.tar.gz"
@@ -36,16 +26,26 @@ class Spinningcube < Formula
     end
   end
 
+  resource "release-manifest" do
+    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.23/release-manifest.json"
+    sha256 "14b88ef8844da33dfc046da67ca40d227b0b6266229c30c6b69160dfa02fa787"
+  end
+
+  resource "release-manifest-bundle" do
+    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.23/release-manifest.sigstore.json"
+    sha256 "cedf90040894dce99a457ab23c1d559cdddc8b45f0f47a3edad4400f4060a640"
+  end
+
   def install
     manifest_path = resource("release-manifest").cached_download
     bundle_path = resource("release-manifest-bundle").cached_download
-    system Formula["cosign"].opt_bin/"cosign", "verify-blob",
+    system formula_opt_bin("cosign")/"cosign", "verify-blob",
       "--bundle", bundle_path,
       "--certificate-identity", "https://github.com/distortedface/SpinningCube.run/.github/workflows/release-cli.yml@refs/tags/cli-v0.1.23",
       "--certificate-oidc-issuer", "https://token.actions.githubusercontent.com",
       manifest_path
     manifest = JSON.parse(File.read(manifest_path))
-    odie "release manifest version mismatch" unless manifest.fetch("version") == "cli-v0.1.23"
+    odie "release manifest version mismatch" if manifest.fetch("version") != "cli-v0.1.23"
     asset = if OS.mac? && Hardware::CPU.arm?
       "spinningcube-macos-arm64.tar.gz"
     elsif OS.mac?
@@ -56,7 +56,7 @@ class Spinningcube < Formula
     artifact = manifest.fetch("artifacts").find { |entry| entry["name"] == asset }
     odie "release manifest does not authorize this binary" unless artifact
     actual = Digest::SHA256.file("spinningcube").hexdigest
-    odie "release binary does not match signed manifest" unless actual == artifact.fetch("binary_sha256")
+    odie "release binary does not match signed manifest" if actual != artifact.fetch("binary_sha256")
     bin.install "spinningcube"
   end
 
