@@ -4,36 +4,36 @@ require "json"
 class Spinningcube < Formula
   desc "Repository-bound local verification authority for SpinningCube.run"
   homepage "https://spinningcube.run"
-  version "0.1.31"
+  version "0.1.32"
   license "Apache-2.0"
 
   depends_on "cosign" => :build
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.31/spinningcube-macos-arm64.tar.gz"
-      sha256 "0dadc9adf9b4daef448f7aa7e8b42781c188c7053d0201d89ad1c175107ab5c7"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.32/spinningcube-macos-arm64.tar.gz"
+      sha256 "a63fa6292697d9507ee5c97d6056c5da8a7f37304ce1efcd7c815d2deee765c2"
     else
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.31/spinningcube-macos-x86_64.tar.gz"
-      sha256 "9ee6fd4ef5cf29516ff710bb2259e902878e634bc2861bfb59f2a8c3e23a8c6b"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.32/spinningcube-macos-x86_64.tar.gz"
+      sha256 "e63c65f614d678d16a1f3eb8dfe2131e52ea0f98078f68cd438f333f7a07ebd3"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.31/spinningcube-linux-x86_64.tar.gz"
-      sha256 "5371bf7ebe74f949ae83c457921e59bd1998dfd10ce3f83bd41cdd65312dbbf8"
+      url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.32/spinningcube-linux-x86_64.tar.gz"
+      sha256 "7a8641b72990de6377db2eadd96f9cd740028f0d8f7c27065dc4461923a7d610"
     end
   end
 
   resource "release-manifest" do
-    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.31/release-manifest.json"
-    sha256 "bf9d6d41f34696519c356f0689b6fbf96abf663c216214a70a6d7c9ddd83820d"
+    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.32/release-manifest.json"
+    sha256 "f4d42da62469d44946117bad282b3e8c33af980ec7d36df5fb995877fdf2b4b1"
   end
 
   resource "release-manifest-bundle" do
-    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.31/release-manifest.sigstore.json"
-    sha256 "169cd21648ef1c615cbed8e4c971b74fd1bf2170e7955e3cc82944b27386bd98"
+    url "https://github.com/distortedface/homebrew-tap/releases/download/cli-v0.1.32/release-manifest.sigstore.json"
+    sha256 "bdeb608a0839b3cd59acbaa07d164d4dd71aff85c289bb2ab7916dba1042f85f"
   end
 
   def install
@@ -41,11 +41,11 @@ class Spinningcube < Formula
     bundle_path = resource("release-manifest-bundle").cached_download
     system formula_opt_bin("cosign")/"cosign", "verify-blob",
       "--bundle", bundle_path,
-      "--certificate-identity", "https://github.com/distortedface/SpinningCube.run/.github/workflows/release-cli.yml@refs/tags/cli-v0.1.31",
+      "--certificate-identity", "https://github.com/distortedface/SpinningCube.run/.github/workflows/release-cli.yml@refs/tags/cli-v0.1.32",
       "--certificate-oidc-issuer", "https://token.actions.githubusercontent.com",
       manifest_path
     manifest = JSON.parse(File.read(manifest_path))
-    odie "release manifest version mismatch" if manifest.fetch("version") != "cli-v0.1.31"
+    odie "release manifest version mismatch" if manifest.fetch("version") != "cli-v0.1.32"
     asset = if OS.mac? && Hardware::CPU.arm?
       "spinningcube-macos-arm64.tar.gz"
     elsif OS.mac?
